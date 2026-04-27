@@ -72,7 +72,14 @@ make -j$(nproc)
 # 3. 配置并运行
 cp ../config/demo.json ./config/
 ./poker_server --config ./config/demo.json
+## 📞 联系与合作
 
+Telegram：@alibabama401
+
+
+Email：ttpoker733@gmail.com
+
+欢迎讨论技术实现、部署问题、功能定制或合作开发等专业话题。
 
 ## 📸 项目截图
 
@@ -98,12 +105,7 @@ cp ../config/demo.json ./config/
 
 欢迎社区通过 Issue 和 Pull Request 共同完善！
 
-## 📞 联系与合作
 
-Telegram：@alibabama401
-Email：ttpoker733@gmail.com
-
-欢迎讨论技术实现、部署问题、功能定制或合作开发等专业话题。
 
 ## ⭐ 支持项目
 如果你觉得这个项目对你有帮助，欢迎 Star 支持一下！
