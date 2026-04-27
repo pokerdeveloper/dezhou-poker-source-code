@@ -83,6 +83,14 @@ Email：ttpoker733@gmail.com
 
 ## 📸 项目截图
 
+![德州扑克游戏大厅](screenshots/84E607B21587F105FEC5D0FF009746ED.jpg)
+
+![登录界面](screenshots/3A54764D72CEBB70A5A80965A93C3ACC.jpg)
+
+![创建牌局](screenshots/03178711F04324F5D4A10564B9708E18.jpg)
+
+![MTT打牌房间](screenshots/5E679337A03783B8AF3653C018F1D959.jpg)
+
 <img width="1176" height="2400" alt="84E607B21587F105FEC5D0FF009746ED" src="https://github.com/user-attachments/assets/8f89dcea-c902-4d13-abe6-8125ec4ccce0" />
 <img width="720" height="1280" alt="B578474D3E2935735437109224188836" src="https://github.com/user-attachments/assets/5d28b05a-a226-41e6-a596-d6e358a31d3d" />
 <img width="720" height="1280" alt="03178711F04324F5D4A10564B9708E18" src="https://github.com/user-attachments/assets/fed4c2fd-7220-4160-8181-128859d81358" />
