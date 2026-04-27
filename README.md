@@ -82,24 +82,25 @@ Email：ttpoker733@gmail.com
 欢迎讨论技术实现、部署问题、功能定制或合作开发等专业话题。
 
 ## 📸 项目截图
+**德州扑克游戏大厅**
 
 ![德州扑克游戏大厅](screenshots/84E607B21587F105FEC5D0FF009746ED.jpg)
 
+
+**登录界面**
 ![登录界面](screenshots/3A54764D72CEBB70A5A80965A93C3ACC.jpg)
 
+
+**创建牌局**
 ![创建牌局](screenshots/03178711F04324F5D4A10564B9708E18.jpg)
 
+**MTT打牌房间**
 ![MTT打牌房间](screenshots/5E679337A03783B8AF3653C018F1D959.jpg)
 
-<img width="1176" height="2400" alt="84E607B21587F105FEC5D0FF009746ED" src="https://github.com/user-attachments/assets/8f89dcea-c902-4d13-abe6-8125ec4ccce0" />
-<img width="720" height="1280" alt="B578474D3E2935735437109224188836" src="https://github.com/user-attachments/assets/5d28b05a-a226-41e6-a596-d6e358a31d3d" />
-<img width="720" height="1280" alt="03178711F04324F5D4A10564B9708E18" src="https://github.com/user-attachments/assets/fed4c2fd-7220-4160-8181-128859d81358" />
-<img width="720" height="1280" alt="374AE612FE1D4C01FD716C3D6E3753C8" src="https://github.com/user-attachments/assets/01070961-89c8-4aaa-b4d1-e9a3404589b0" />
-<img width="720" height="1280" alt="19F73728400F466D1B26B09E04E062FC" src="https://github.com/user-attachments/assets/d33bdb47-59f4-4bdf-8e11-36d69c464b8d" />
-<img width="720" height="1280" alt="8ABCFEB5516352EE96F77272B39FCF45" src="https://github.com/user-attachments/assets/58eadff9-7acc-4f3f-9e05-f16226f97476" />
-<img width="720" height="1280" alt="5E679337A03783B8AF3653C018F1D959" src="https://github.com/user-attachments/assets/97f75126-ae12-4e2b-aa06-3fce277751f7" />
-<img width="720" height="1280" alt="3A54764D72CEBB70A5A80965A93C3ACC" src="https://github.com/user-attachments/assets/58ea2c79-ae16-45b9-82ab-f299dc611025" />
-<img width="720" height="1280" alt="0FC579ED11E86A65C3FE6024EC105B8B" src="https://github.com/user-attachments/assets/9bb7d6db-52f6-4746-aa7a-bb996661b3a2" />
+**创建联盟**
+![创建联盟](screenshots/19F73728400F466D1B26B09E04E062FC.jpg)
+
+
 
 
 ## 📈 未来路线图（Roadmap）
