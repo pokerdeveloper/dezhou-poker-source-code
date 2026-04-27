@@ -1,40 +1,78 @@
 # 🃏 德州扑克源码 | 德州俱乐部源码 | 德州扑克服务器引擎
-
 **德州源码 · 德州联盟源码 · 德州私人局 · 德州朋友局源码**  
 实时多人德州扑克高并发服务器引擎（C++17/20 + WebSocket）
 
 **Texas Hold'em Poker Multiplayer Source Code** | **Real-time Multiplayer Poker Server Engine** | Scalable Game Backend
 
-[![Stars](https://img.shields.io/github/stars/pokerdeveloper/poker-multiplayer-engine.svg)](https://github.com/pokerdeveloper/poker-multiplayer-engine/stargazers)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Stars](https://img.shields.io/github/stars/pokerdeveloper/dezhou-poker-source-code.svg)](https://github.com/pokerdeveloper/dezhou-poker-source-code/stargazers)
+[![Forks](https://img.shields.io/github/forks/pokerdeveloper/dezhou-poker-source-code.svg)](https://github.com/pokerdeveloper/dezhou-poker-source-code/network/members)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+---
 ---
 
 ## ✨ 项目亮点（核心特性）
 
-- **服务器权威架构**：所有游戏逻辑由服务器处理，防作弊、防外挂，保证公平性
-- **高并发实时同步**：基于 WebSocket + 事件驱动，支持高并发多人对战
-- **完整德州扑克逻辑**：支持经典德州（9人/6人桌）、私人局、朋友局、俱乐部模式
-- **AI Bot 支持**：内置智能机器人，可用于测试或填充桌位
-- **技术栈**：C++17/20 + TARS（或你的框架） + MySQL/Redis + WebSocket，代码结构清晰、易扩展
-- **跨平台友好**：服务器端独立，可搭配 Unity / Web / React 等任意客户端使用
+- **服务器权威架构**：所有核心逻辑（发牌、牌型计算、动作验证、下注处理）均在服务端执行，客户端仅负责展示，有效防止作弊和外挂
+- **高并发实时通信**：基于 WebSocket 的低延迟事件驱动架构，支持多人同桌实时对战
+- **完整德州扑克支持**：经典德州（9人桌 / 6人桌），支持私人局、朋友局、俱乐部房间模式
+- **模块化设计**：网络层、游戏逻辑、数据库操作、日志系统高度解耦，易于扩展和维护
+- **数据持久化**：支持手牌历史、玩家行为记录，便于数据分析和反作弊
+- **技术语言**：核心使用现代 C++，代码结构清晰，性能优秀
 
-这是一个**面向开发者**的开源德州扑克多人游戏引擎，适合学习高并发游戏服务器架构，或快速搭建德州俱乐部、私人局系统。
+本项目是**面向开发者**的开源德州扑克多人游戏服务器引擎，适合学习高并发游戏后端，或快速搭建德州俱乐部、私人局系统。
 
-> **仅供学习和研究使用，请严格遵守当地法律法规，不得用于任何真实货币赌博。**
+> **⚠️ 重要声明**：本项目**仅供学习和研究使用**，严格禁止用于任何真实货币赌博活动。任何商业使用请自行遵守当地法律法规，作者不承担任何法律责任。*
+## 🛠 技术栈
 
+- **主要语言**：C++（98.8%）
+- **网络层**：WebSocket（支持二进制协议，低延迟）
+- **架构**：Server-Authoritative（服务器权威） + Room-Based（房间隔离） + Event-Driven
+- **存储**：MySQL / Redis（推荐用于缓存和分布式）
+- **其他**：多线程安全、日志系统、Shell 脚本辅助
+
+客户端不绑定具体框架，可搭配 Unity、Web、React 等任意前端，只需实现 WebSocket 协议即可接入
 ---
 
 ## 🚀 快速开始
-
+### 方式一：使用 Docker（推荐，无需编译）
 **```bash**
-git clone https://github.com/pokerdeveloper/poker-multiplayer-engine.git
-cd poker-multiplayer-engine
-# 按照 docs/build.md 中的 cmake 编译步骤执行
-Docker 一键运行（推荐新手）：
-docker run -p 8080:8080 pokerdev/poker-engine:latest
-# 使用 WebSocket 测试工具连接 ws://localhost:8080
-详细编译、配置、协议说明和部署指南请查看 docs
+# 1. 克隆本仓库（注意：地址正确）
+git clone https://github.com/pokerdeveloper/dezhou-poker-source-code.git
+cd dezhou-poker-source-code
+
+# 2. 使用 docker-compose 一键启动（需先安装 docker-compose）
+docker-compose up -d
+
+# 3. 测试 WebSocket 连接
+# 使用浏览器或 wscat 工具：wscat -c ws://localhost:8080
+# 发送测试消息：{"type":"ping"}
+方式二：从源码编译（适合二次开发）
+环境要求：
+
+Linux (Ubuntu 22.04+) 或 macOS
+
+CMake 3.15+
+
+C++17 编译器 (GCC 9+ 或 Clang 10+)
+
+MySQL 8.0+ / Redis 6.0+
+编译步骤：
+# 1. 安装依赖（Ubuntu）
+sudo apt update
+sudo apt install -y cmake build-essential libssl-dev libmysqlclient-dev redis-server
+
+# 2. 克隆并编译
+git clone https://github.com/pokerdeveloper/dezhou-poker-source-code.git
+cd dezhou-poker-source-code
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j$(nproc)
+
+# 3. 配置并运行
+cp ../config/demo.json ./config/
+./poker_server --config ./config/demo.json
+
 
 ## 📸 项目截图
 
@@ -69,8 +107,14 @@ Email：ttpoker733@gmail.com
 
 ## ⭐ 支持项目
 如果你觉得这个项目对你有帮助，欢迎 Star 支持一下！
-也欢迎 Fork 后进行二次开发，并提交 Pull Request 贡献代码。
+
 
 再次声明：本项目为开源学习项目，不包含任何支付系统，也不支持真实货币赌博。任何滥用行为与作者无关。
 
 关键词：德州扑克源码、德州源码、德州俱乐部源码、德州联盟源码、德州私人局源码、德州朋友局源码、Texas Hold'em source code、poker server、multiplayer poker engine、C++ poker game
+
+📝 更新日志
+2026-04-27：修复 README 中的 git clone 地址，优化快速开始指南
+
+2026-01-01：初始版本发布
+
