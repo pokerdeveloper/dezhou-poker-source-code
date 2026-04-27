@@ -1,6 +1,4 @@
-# Poker Multiplayer Engine
-
-**实时多人德州扑克引擎 | Scalable Real-time Poker Server | 德州俱乐部源码 | 德州私人局 | 德州朋友局**
+# 德州扑克源码  | 德州朋友局| 德州俱乐部源码 | 实时多人德州扑克服务器引擎|#Poker Multiplayer Engine
 
 一个高性能、可扩展的**服务端权威（Server-Authoritative）**多人扑克游戏后端框架，专为实时同步和高并发环境设计。采用现代 C++ + WebSocket 架构，适合构建德州扑克俱乐部、私人局、朋友局、联盟系统等应用。
 
