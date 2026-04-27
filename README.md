@@ -1,8 +1,8 @@
 # 🃏 德州扑克源码 | 德州俱乐部源码 | 德州扑克服务器引擎
 **德州源码 · 德州联盟源码 · 德州私人局 · 德州朋友局源码**  
-实时多人德州扑克高并发服务器引擎（C++17/20 + WebSocket）
+实时多人**德州扑克**高并发服务器引擎（C++ + WebSocket），支持私人局/朋友局/俱乐部模式
 
-**Texas Hold'em Poker Multiplayer Source Code** | **Real-time Multiplayer Poker Server Engine** | Scalable Game Backend
+**Texas Hold'em Multiplayer Poker Source Code** | **Real-time Multiplayer Poker Server Engine** | Scalable Game Backend
 
 [![Stars](https://img.shields.io/github/stars/pokerdeveloper/dezhou-poker-source-code.svg)](https://github.com/pokerdeveloper/dezhou-poker-source-code/stargazers)
 [![Forks](https://img.shields.io/github/forks/pokerdeveloper/dezhou-poker-source-code.svg)](https://github.com/pokerdeveloper/dezhou-poker-source-code/network/members)
@@ -11,18 +11,18 @@
 ---
 ---
 
-## ✨ 项目亮点（核心特性）
+## ✨ 项目核心亮点
 
-- **服务器权威架构**：所有核心逻辑（发牌、牌型计算、动作验证、下注处理）均在服务端执行，客户端仅负责展示，有效防止作弊和外挂
-- **高并发实时通信**：基于 WebSocket 的低延迟事件驱动架构，支持多人同桌实时对战
-- **完整德州扑克支持**：经典德州（9人桌 / 6人桌），支持私人局、朋友局、俱乐部房间模式
-- **模块化设计**：网络层、游戏逻辑、数据库操作、日志系统高度解耦，易于扩展和维护
-- **数据持久化**：支持手牌历史、玩家行为记录，便于数据分析和反作弊
-- **技术语言**：核心使用现代 C++，代码结构清晰，性能优秀
+- **服务器权威架构**：所有游戏逻辑（发牌、牌型计算、动作验证、下注）均在服务端执行，有效防作弊、防外挂
+- **高并发实时同步**：基于 WebSocket 的低延迟事件驱动架构，支持高并发多人对战
+- **完整德州扑克支持**：经典德州（9人桌 / 6人桌）、私人局、朋友局、俱乐部房间模式
+- **AI Bot 支持**：内置智能机器人，可用于测试或自动填充桌位
+- **模块化设计**：网络层、游戏逻辑、数据库完全解耦，易于二次开发和扩展
+- **技术栈**：现代 C++ + WebSocket + MySQL/Redis，性能优秀、结构清晰
 
-本项目是**面向开发者**的开源德州扑克多人游戏服务器引擎，适合学习高并发游戏后端，或快速搭建德州俱乐部、私人局系统。
+> **⚠️ 重要声明**：本项目**仅供学习和研究使用**，严格禁止用于任何真实货币赌博活动。商业使用请自行遵守当地法律法规，作者不承担任何法律责任。
 
-> **⚠️ 重要声明**：本项目**仅供学习和研究使用**，严格禁止用于任何真实货币赌博活动。任何商业使用请自行遵守当地法律法规，作者不承担任何法律责任。*
+---
 ## 🛠 技术栈
 
 - **主要语言**：C++（98.8%）
@@ -124,9 +124,9 @@ Email：ttpoker733@gmail.com
 如果你觉得这个项目对你有帮助，欢迎 Star 支持一下！
 
 
-再次声明：本项目为开源学习项目，不包含任何支付系统，也不支持真实货币赌博。任何滥用行为与作者无关。
+再次声明：本仓库为开源学习项目，不包含任何支付或真实赌博功能。请遵守当地法律法规，合理使用。
+关键词：德州扑克源码、德州源码、德州俱乐部源码、德州联盟源码、德州私人局源码、德州朋友局源码、Texas Hold'em source code、poker server、multiplayer poker、C++ poker game engine、websocket poker
 
-关键词：德州扑克源码、德州源码、德州俱乐部源码、德州联盟源码、德州私人局源码、德州朋友局源码、Texas Hold'em source code、poker server、multiplayer poker engine、C++ poker game
 
 📝 更新日志
 2026-04-27：修复 README 中的 git clone 地址，优化快速开始指南
