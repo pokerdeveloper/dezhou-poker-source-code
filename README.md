@@ -43,6 +43,12 @@ mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j8
 ./poker_server
+使用 Docker（推荐，无需编译）
+
+# 1. 拉取镜像并运行（示例镜像地址需您实际提供）
+docker run -p 8080:8080 pokerdev/poker-engine:latest
+
+# 2. 使用 WebSocket 测试工具连接 ws://localhost:8080
 
 ## 📈 本项目实现的技术优化
 
