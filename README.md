@@ -1,3 +1,104 @@
+# Poker Multiplayer Engine
+
+**实时多人德州扑克引擎 | Scalable Real-time Poker Server | 德州俱乐部源码 | 德州私人局 | 德州朋友局**
+
+一个高性能、可扩展的**服务端权威（Server-Authoritative）**多人扑克游戏后端框架，专为实时同步和高并发环境设计。采用现代 C++ + WebSocket 架构，适合构建德州扑克俱乐部、私人局、朋友局、联盟系统等应用。
+
+**GitHub Stars**：⭐ 持续更新中 | **License**：MIT
+
+---
+
+## ✨ 核心特性
+
+- **服务端权威架构**：所有游戏逻辑（发牌、牌型计算、动作验证）均在服务端执行，客户端仅发送操作指令，确保公平性和防作弊基础。
+- **实时状态同步**：基于 WebSocket 的低延迟事件驱动同步，支持多人同桌实时对战。
+- **房间与会话管理**：支持公开桌、私人局、朋友局、俱乐部房间，可灵活配置桌型（9人/6人/短牌等）。
+- **匹配系统**：智能 matchmaking，支持快速加入、好友邀请、私密房间。
+- **AI 机器人引擎**：内置可配置的 AI Bot，用于测试、填充桌子或单机练习模式。
+- **事件驱动游戏流程**：清晰的牌局生命周期（PreFlop → Flop → Turn → River → Showdown），易于扩展其他扑克变体。
+- **高并发设计**：支持线程安全、连接池、房间隔离，单机可承载较高并发（结合 Redis 等可水平扩展）。
+- **模块化架构**：核心逻辑、网络层、数据库操作、日志系统完全解耦，便于二次开发。
+- **日志与数据持久化**：支持手牌历史记录、玩家行为日志入库，为反作弊和数据分析提供基础。
+
+---
+
+## 🛠 技术栈
+
+- **后端语言**：C++（现代 C++ 标准，推荐 C++17/20）
+- **网络层**：WebSocket（高效实时通信，支持二进制协议）
+- **架构模式**：Server-Authoritative + Event-Driven + Room-Based
+- **数据库支持**：MySQL / PostgreSQL（通过 DBOperator 层），推荐搭配 Redis 做缓存与 Pub/Sub
+- **其他**：多线程安全（ThreadLockManager）、协议定义（TARS 等）、日志系统
+- **客户端**：不包含 UI（推荐搭配 Unity / React / Flutter 等任意前端），仅需实现 WebSocket 通信协议即可接入
+
+---
+
+## 🚀 快速开始
+
+
+git clone https://github.com/pokerdeveloper/poker-multiplayer-engine.git
+cd poker-multiplayer-engine
+# 根据你的环境编译（推荐使用 CMake）
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make -j8
+./poker_server
+
+## 📈 本项目实现的技术优化
+
+**性能与扩展性**
+引入 Redis 缓存 + Pub/Sub 实现分布式房间管理和跨服同步
+使用 Kubernetes + Docker 容器化部署，支持自动扩缩容
+优化牌型计算与洗牌算法（使用加密安全随机数源）
+
+**反作弊与安全**
+服务端严格验证所有动作（下注、弃牌、超时等）
+增加行为分析模块（异常下注模式、胜率偏差检测）
+客户端完整性校验 + 设备指纹 + 风控系统
+手牌历史智能审计
+
+**功能扩展**
+支持多种扑克变体（短牌、奥马哈、Pineapple 等）
+增加 SNG、MTT 锦标赛模式、赏金赛、联盟系统
+社交系统：好友、聊天、表情、礼物、实时语音（WebRTC）
+多语言支持（简/繁中 + 英文 + 韩文+马来西亚语+泰语+日语等）
+
+**客户端与前端**
+提供 Unity + Lua 示例客户端（或 React + WebSocket H5 版）
+优化 UI/UX，提升新手引导与留存
+
+**数据与运维**
+接入完整埋点与分析系统（玩家留存、流失、付费转化）
+自动化 CI/CD + 监控告警（Prometheus + Grafana）
+压力测试工具与基准数据
+
+**合规与 monetization（（
+金币/钻石系统（非真实货币模式）
+支付接口抽象层（便于接入当地支付渠道）
+年龄分级、隐私政策支持
+
+
+
+## 📊 当前状态与路线图
+当前版本：基础核心引擎可用，适合学习、原型开发和二次开发。
+完整商用级德州俱乐部解决方案，支持高并发、强反作弊、多模式赛事，并提供一键部署脚本与详细文档。
+欢迎社区贡献 Pull Request，一起完善这个开源扑克引擎！
+
+## 📞 联系与合作
+
+Telegram：@alibabama401
+Email：ttpoker733@gmail.com
+
+欢迎讨论技术实现、生产部署、定制开发等专业话题。
+
+## 产品部分截图
+![1房间列表](https://github.com/user-attachments/assets/55b7e4e6-875b-471f-bfe4-ebc01ec79e61)
+![1管理 - 副本](https://github.com/user-attachments/assets/2662b77e-1a07-4fe0-b7c6-5e8349d5ab32)
+![1管理俱乐部币 - 副本](https://github.com/user-attachments/assets/add2e1c3-efc2-4eb6-8578-acdf0f3d4c5c)
+![4房间2-6人桌](https://github.com/user-attachments/assets/e2645541-12ce-4945-83a0-7e421787a90b)
+![4房间2-9人桌](https://github.com/user-attachments/assets/8409e9a6-baf4-4c97-87ff-eabaea198461)
+![AB7AF159B3F73F5AEB2C720E957074F4](https://github.com/user-attachments/assets/a9e778df-0c5e-48cb-85b1-a7cab553755d)
+![6EF906300DBB3B2C29583B8027D40F5C](https://github.com/user-attachments/assets/2c46c343-68f9-4b7f-a06d-50d1abe1bb70)
 ## 🧠 Architecture Overview
 
 This project follows a server-authoritative architecture:
@@ -10,121 +111,6 @@ Designed for:
 - High concurrency environments
 - Scalable multiplayer systems
 - Real-time game consistency
-
-# Poker Multiplayer Engine | 实时多人扑克引擎| 多人撲克引擎|德州扑克源码|德州俱乐部|Texas-Hold-em-Club-source-code
-
-A scalable multiplayer poker engine designed for real-time synchronization and high-concurrency environments.  
-一个面向高并发与实时同步场景设计的多人扑克游戏引擎。
-
----
-
-## 🧠 Architecture Overview | 架构概览
-
-This project follows a **server-authoritative architecture** to ensure consistency and fairness.  
-本项目采用**服务器权威架构（Server-Authoritative）**，保证游戏一致性与公平性。
-
-- Server handles all game logic ｜ 所有游戏逻辑由服务器处理  
-- Clients send only player actions ｜ 客户端仅发送操作指令  
-- Real-time state synchronization ｜ 实时状态同步  
-- Room-based session management ｜ 基于房间的会话管理  
-
----
-
-## 🏗️ System Architecture | 系统架构
-            +----------------------+
-            |      Client (UI)     |
-            |  Web / Mobile / App  |
-            +----------+-----------+
-                       |
-                       | WebSocket
-                       ↓
-            +----------------------+
-            |   Network Layer      |
-            | (Connection Manager) |
-            +----------+-----------+
-                       |
-                       ↓
-            +----------------------+
-            |   Game Server Core   |
-            |----------------------|
-            |  Room Manager        |
-            |  Matchmaking         |
-            |  Game Logic Engine   |
-            |  State Synchronizer  |
-            +----------+-----------+
-                       |
-                       ↓
-            +----------------------+
-            |   AI / Bot Engine    |
-            +----------------------+
-
-
----
-
-## ⚙️ System Design | 系统设计
-
-- Room-based architecture ｜ 房间隔离架构  
-- Event-driven game flow ｜ 事件驱动游戏流程  
-- Server-side state authority ｜ 服务端状态控制  
-- Modular and scalable components ｜ 模块化与可扩展设计  
-
----
-
-## 🚀 Features | 功能特点
-
-- Real-time multiplayer poker rooms ｜ 实时多人扑克房间  
-- Matchmaking & table management ｜ 匹配与牌桌管理  
-- Game state synchronization ｜ 游戏状态同步  
-- Texas Hold’em logic implementation ｜ 德州扑克规则实现  
-- AI / bot player support ｜ AI机器人支持  
-
----
-
-## 📦 Project Structure | 项目结构
-
-
----
-
-## 🚀 Features | 功能特点 | 功能特點
-
-- Real-time multiplayer game rooms ｜ 实时多人房间系统 ｜ 即時多人房間系統  
-- Matchmaking & table management ｜ 匹配与牌桌管理 ｜ 匹配與牌桌管理  
-- Game state synchronization ｜ 游戏状态同步 ｜ 遊戲狀態同步  
-- Texas Hold’em game logic ｜ 德州扑克规则实现 ｜ 德州撲克規則實現  
-- Modular and scalable backend ｜ 模块化可扩展后端 ｜ 模組化可擴展後端  
-
----
-
-## 🧠 Technical Highlights | 技术亮点 | 技術亮點
-
-- High concurrency architecture ｜ 高并发架构 ｜ 高併發架構  
-- Event-driven game system ｜ 事件驱动游戏逻辑 ｜ 事件驅動遊戲邏輯  
-- Real-time communication (WebSocket) ｜ 实时通信机制 ｜ 即時通信機制  
-- Clean and extensible code structure ｜ 清晰可扩展代码结构 ｜ 清晰可擴展代碼結構  
-
----
-
-## 📦 Project Structure | 项目结构 | 專案結構
-
-
-/server # Backend server logic ｜ 服务端逻辑 ｜ 服務端邏輯
-/game # Game rules (Texas Hold’em) ｜ 游戏规则 ｜ 遊戲規則
-/matchmaking # Room & table system ｜ 房间与匹配系统 ｜ 房間與匹配系統
-/network # Communication layer ｜ 网络通信层 ｜ 網路通信層
-/client # Demo client (optional) ｜ 演示客户端 ｜ 演示客戶端
-
-## 🎯 Purpose | 项目目的 | 專案目的
-
-This project is intended for educational and technical demonstration purposes.  
-本项目用于技术学习与架构演示。  
-本專案用於技術學習與架構展示。
-
-It showcases how to build scalable multiplayer game systems.  
-用于展示如何构建高扩展性的多人游戏系统。  
-用於展示如何構建高擴展性的多人遊戲系統。
-
----
-
 ## ⚠️ Disclaimer | 免责声明 | 免責聲明
 
 - This project does NOT support real-money gambling  
@@ -143,66 +129,8 @@ Any misuse is not the responsibility of the author.
 任何滥用行为与作者无关。  
 任何濫用行為與作者無關。  
 
----
-
-## 🛠️ Getting Started | 快速开始 | 快速開始
+本项目仅供学习、研究和技术演示使用，不支持也不鼓励用于真实货币赌博。任何商业用途请自行确保符合当地法律法规，作者不承担相关责任。
 
 
-git clone https://github.com/YOUR_USERNAME/poker-engine.git
-cd poker-engine
 
-## 📌 Roadmap | 发展计划 | 發展計劃
-Improve AI strategies ｜ 优化AI策略 ｜ 優化AI策略
-Add game analytics ｜ 增加数据分析 ｜ 增加數據分析
-Web-based client ｜ Web客户端 ｜ Web客戶端
-Performance optimization ｜ 性能优化 ｜ 性能優化
-🤝 Contributing | 参与贡献 | 參與貢獻
 
-## Contributions are welcome.
-欢迎提交改进建议。
-歡迎提交改進建議。
-
-## 📄 License | 开源协议 | 開源協議
-
-MIT License
-
-## 🌐 About | 关于 | 關於
-
-This repository focuses on multiplayer game architecture and technical implementation.
-本仓库专注于多人游戏架构与技术实现。
-本倉庫專注於多人遊戲架構與技術實現。
-
-## 联系：For advanced implementations or architecture discussions, feel free to connect professionally.
-如需更深入的架构或技术交流，欢迎专业沟通。
-如需更深入的架構或技術交流，歡迎專業交流。
-Telegram：@alibabama401； 邮箱：ttpoker733@gmail.com
-
-## 产品部分截图
-![1房间列表](https://github.com/user-attachments/assets/55b7e4e6-875b-471f-bfe4-ebc01ec79e61)
-![1管理 - 副本](https://github.com/user-attachments/assets/2662b77e-1a07-4fe0-b7c6-5e8349d5ab32)
-![1管理俱乐部币 - 副本](https://github.com/user-attachments/assets/add2e1c3-efc2-4eb6-8578-acdf0f3d4c5c)
-![4房间2-6人桌](https://github.com/user-attachments/assets/e2645541-12ce-4945-83a0-7e421787a90b)
-![4房间2-9人桌](https://github.com/user-attachments/assets/8409e9a6-baf4-4c97-87ff-eabaea198461)
-![AB7AF159B3F73F5AEB2C720E957074F4](https://github.com/user-attachments/assets/a9e778df-0c5e-48cb-85b1-a7cab553755d)
-![6EF906300DBB3B2C29583B8027D40F5C](https://github.com/user-attachments/assets/2c46c343-68f9-4b7f-a06d-50d1abe1bb70)
-
-## ⚙️ System Design
-
-- Room-based architecture
-- Event-driven game flow
-- Stateless communication layer
-- Scalable matchmaking system
-  
-## 🌐 Roadmap | 发展计划
-Improve AI strategies ｜ 优化AI策略
-Add analytics system ｜ 增加数据分析
-Optimize performance ｜ 性能优化
-Expand multi-game support ｜ 扩展多游戏支持
-
-## 🌐 Professional | 专业交流
-
-This repository focuses on system architecture and technical implementation.
-本仓库专注于系统架构与技术实现。
-
-For advanced implementations (scalability, custom backend systems, or production-ready deployments), professional discussions are welcome.
-如需更高级的系统实现（高并发、定制后端、生产级部署等），欢迎进行专业交流。
