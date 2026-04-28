@@ -1,0 +1,115 @@
+syntax = "proto3";
+option cc_generic_services=false;
+package XGameSNG;
+
+// Msg ID
+enum E_SNG_MsgId
+{
+    E_SNG_START_MSG = 0;
+    E_SNG_MSGID_LOGIN_ROOM_CS = 600;     //登录房间消息请求[CS] 
+    E_SNG_MSGID_ROOM_LIST_CS = 601;// 场次列表
+    E_SNG_MSGID_SIGNIN_CS = 602; //报名 请求返回
+    E_SNG_MSGID_ENTER_2C = 603; //进入通知
+    E_SNG_MSGID_PROCESS_2C = 604; //升盲通知
+    E_SNG_MSGID_RANK_RESULT_2C = 605; //比赛结果通知
+    E_SNG_MSGID_EXIT_ROOM_CS = 606; //退出房间
+    E_SNG_MSGID_QUIT_CS = 607;//退赛
+    E_SNG_MSGID_GAME_END = 608;// 比赛结束
+};
+
+//E_SNG_MSGID_LOGIN_ROOM_CS
+message TSNGMsgRespLoginRoom
+{
+    sint32 iResultID = 1; //返回结果: 0.成功，其他失败
+    sint32 iStatue = 2;   //玩家状态 3:坐桌等待 5：游戏中 6:离线
+    sint32 iBetId = 3;
+}
+
+//E_SNG_MSGID_EXIT_ROOM_CS
+message TSNGMsgRespExitRoom
+{
+    sint32 iResultID = 1; //返回结果: 0.成功，其他失败
+}
+
+//E_SNG_SIGNIN_CS 
+message RoomInfo
+{
+    int32 iBetId = 1; //场次ID
+    int32 iPlayerNum = 2;// 参赛人数
+    int64 lEntryFee = 3; // 报名费
+    map<int32, int64> mRewardInfo= 4;// 奖励信息 rank： num
+    repeated BlindLevelInfo mBlindLevelInfo = 5;// 盲注级别信息
+}
+
+message TSNGMsgRespRoomList
+{
+    sint32 iResultID = 1; //返回结果: 0.成功，其他失败
+    repeated RoomInfo mRoomInfo = 2; //场次信息
+}
+
+message TSNGMsgCSSignIn
+{
+    sint32 iResultID = 1; //返回结果: 0.成功，其他失败
+    sint32 iBetId = 2; //场次id
+}
+
+message PlayerInfo
+{
+    sint64      lPlayerID     = 1;  //玩家ID
+    sint32      iTableID      = 2;  //桌子ID
+    sint32      iChairID      = 3;  //所在桌子位置
+    string      sNickName     = 4;  //玩家昵称
+    string      sHeadStr      = 5;  //头像路径
+    sint32      iPlayerGender = 6;  //玩家性别 0-未知 1-男 2-女
+    string      sPlayerIP     = 7;  //玩家IP 
+    string      sSignature    = 8;  //玩家签名
+    sint32      iStatue       = 9;  //玩家状态 
+    sint64      iTakenin      = 10; //玩家当前筹码
+    bool        bShowAchievement = 11;//是否显示成就
+}
+
+//E_SNG_ENTER_2C
+message TSNGMsgEnterGameNotify
+{
+    int32 iResultID = 1;
+    repeated PlayerInfo mPlayerInfo = 2;
+}
+
+message BlindLevelInfo
+{
+    int32 iBlindLevel = 1;
+    int64 lSmallBlind = 2;
+    int64 lBigBlind = 3;
+    int64 iRemainTime = 4;
+}
+
+//E_SNG_PROCESS_2C
+message TSNGMsgProcessNotify
+{
+    sint32 currentLevel = 1;        // 当前盲注级别
+    repeated BlindLevelInfo mBlindLevelInfo = 2;// 盲注级别信息
+};
+
+//E_SNG_RANK_RESULT_2C
+message TSNGMsgRankResultNotify
+{
+    message RewardItem
+    {
+        int32 iPropsID = 1;
+        int64 lRewardNum = 2;
+    }
+    int32 iRank = 1; //名次
+    repeated RewardItem mRewardInfo = 2; //奖励信息
+}
+//E_SNG_MSGID_QUIT_CS
+message TSNGMsgCSQuit
+{
+    int32 iResultID = 1;
+    int32 iGameStatus = 2;//
+}
+
+//E_SNG_MSGID_GAME_END
+message TSNGMsgGameEndNotify
+{
+    int32 iResultID = 1;
+}

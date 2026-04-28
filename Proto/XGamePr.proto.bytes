@@ -1,0 +1,215 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package XGamePr;
+
+enum Eum_Pr_Msgid
+{
+    E_MSGID_DEFAULT = 0;
+ 	E_PRIVATE_MSGID_ENTER_ROOM_REQ 		   = 361;	   // 进入房间请求[C->S,Data:]
+    E_PRIVATE_MSGID_ENTER_ROOM_RESP		   = 362;	   // 进入房间响应[S->C,Data:]
+    E_PRIVATE_MSGID_ENTER_ROOM_NOTIFY	   = 363;      // 进入房间通知[S->C,Data:]
+    E_PRIVATE_MSGID_EXIT_ROOM_REQ		   = 364;	   // 离开房间请求[C->S]
+    E_PRIVATE_MSGID_EXIT_ROOM_RESP		   = 365;	   // 离开房间响应[S->C,Data:]
+    E_PRIVATE_MSGID_EXIT_ROOM_NOTIFY	   = 366;	   // 离开房间通知[S->C,Data:]
+    E_PRIVATE_MSGID_SITDOWN_REQ			   = 367;	   // 坐下桌子请求[C->S,Data:]
+    E_PRIVATE_MSGID_SITDOWN_RESP		   = 368;	   // 坐下桌子响应[S->C,Data:]
+    E_PRIVATE_MSGID_SITDOWN_NOTIFY		   = 369;	   // 坐下桌子通知[S->C,Data:]
+    E_PRIVATE_MSGID_DISMISS_ROOM_REQ	   = 370;	   // 解散房间请求[C->S,Data:]
+    E_PRIVATE_MSGID_DISMISS_ROOM_NOTIFY	   = 371;  	   // 解散房间通知[S->C,Data:]
+    E_PRIVATE_MSGID_LOGIN_ROOM_REQ         = 372;      // 登录房间消息请求[C->S]
+    E_PRIVATE_MSGID_LOGIN_ROOM_RESP        = 373;      // 登录房间消息响应[S->C,Data:]
+    E_PRIVATE_MSGID_RECOME_NOTIFY          = 374;      // 重入消息响应[S->C,Data:]
+    E_PRIVATE_MSGID_GET_TABLE_LIST_REQ     = 375;      // 桌子列表请求
+    E_PRIVATE_MSGID_GET_TABLE_LIST_RESP    = 376;
+    E_PRIVATE_MSGID_WATCH_GAME_RESP        = 377;      // 观战
+    E_PRIVATE_MSGID_CAL_GAME_RESP          = 378;      // 玩家结算
+    E_PRIVATE_MSGID_GET_WINCLOSE_LIST_REQ  = 379;      // 获取玩家输赢
+    E_PRIVATE_MSGID_GET_WINCLOSE_LIST_RESP = 380;      // 获取玩家输赢返回
+    E_PRIVATE_MSGID_GET_COIN_REQ           = 381;      // 获取玩家桌子上的余额
+    E_PRIVATE_MSGID_GET_COIN_RESP          = 382;      // 获取玩家桌子上的余额返回
+    E_PRIVATE_MSGID_GET_TABLE_COUNT_REQ    = 383;      // 俱乐部正在进行中的桌子数量请求
+    E_PRIVATE_MSGID_GET_TABLE_COUNT_RESP   = 384;      // 俱乐部正在进行中的桌子数量返回
+}
+
+// 进入房间请求
+message CreateRoomOption
+{
+    sint32 iGameType     = 1; // 1 经典 2 AOF 3 短牌
+    sint32 iRoomType     = 2; // 1: 私人场 2 俱乐部场
+    sint64 iClubId       = 3; // 俱乐部ID
+    sint32 iBlindLevel   = 4; // 盲注级别
+    sint32 iMaxSeat      = 5; // 最大座位数
+    sint32 iOptionTime   = 6; // 操作时间
+    sint64 iRoomExpired  = 7; // 房间有效时间
+    sint32 iPet          = 8; // 抽水百分比
+}
+
+message TPMsgReqEnterRoom
+{
+	sint32 type                   = 1; // 1: 创建房间  2： 加入房间
+	string sRoomKey               = 2;
+	CreateRoomOption createOption = 3;
+}
+
+// 进入房间应答
+message TPMsgRespEnterRoom
+{
+    int32 iResultID               = 1;   // 返回结果: 0.成功, 
+    string sRoomKey               = 2;   //
+    int64 lMasterID               = 3;   // 房主ID
+    sint64 lCreateRoomTime        = 4;
+    CreateRoomOption createOption = 5;
+}
+
+// 离开房间应答
+message TPMsgRespExitRoom
+{
+	sint32 iResultID = 1;
+	sint64 lPlayerID = 2;
+}
+
+// 玩家坐下请求
+message TPMsgReqSitDown
+{
+   	bool bAutoSit        = 1;   // 是否自动坐桌
+    sint32 iChairID      = 2;   // 桌子位置 
+    bool bAutoSupplement = 3;   // 自动补充
+}
+
+message TPMsgUserInfo
+{
+	sint64 lPlayerID     = 1;	 // 玩家ID
+	string sNickName     = 2;	 // 玩家昵称
+    string sHeadStr      = 3;    // 头像路径
+    sint32 iPlayerGender = 4;    // 玩家性别 0-未知 1-男 2-女
+    sint32 iChairID      = 5; 
+    sint64 iTakenin      = 6;
+}
+
+// 玩家坐下应答
+message TPMsgRespSitDown
+{
+    sint32 iResultID       = 1;  // 返回结果: 0-成功; 
+    TPMsgUserInfo userinfo = 2;	 // 所在桌子位置 
+}
+
+// 解散房间请求
+message TPMsgReqDismissRoom
+{
+    sint32 iDisReason = 1; //解散原因, 0.达到游戏局数 1.房主要求解散 
+}
+
+// 解散房间应答
+message TPMsgRespDismissRoom
+{
+    sint32 iResultID  = 1;  // 返回结果：0.成功, -1.其它错误
+    sint32 iDisReason = 2;  // 解散原因, 0.达到游戏局数 1.房主要求解散  2. 游戏进行中， 本局结束后解散
+}
+
+// 登录房间消息响应
+message TPMsgRespLoginRoom
+{
+    int32 iResultID = 1;   // 返回结果: 0.成功
+}
+
+// 玩家重新进入响应
+message TPMsgRespRecome
+{
+    sint32 lPlayerID = 1;   // 玩家ID
+   	sint32 iChairID  = 2;	// 桌子位置
+}
+
+// 玩家信息
+message TPMsgRspTableInfo
+{
+    sint64 lPlayerID     = 1;   // 玩家ID
+    sint32 iPlayerGender = 2;   // 玩家性别 0-未知，1-男， 2-女
+    string sNickName     = 3;   // 玩家昵称
+    string sHeadStr      = 4;   // 头像
+    sint64 lPoint        = 5;   // 分数
+}
+
+// 玩家信息
+message TPMsgRspTableInfoArray
+{
+    map<sint32, TPMsgRspTableInfo> tableUserInfo = 1;   // 单个桌子的玩家信息，位置号<==>玩家信息
+    CreateRoomOption createOption                = 2;
+    sint64 lCreateRoomTime                       = 3;
+}
+
+// 取桌子列表请求[C->S]
+message TPMsgRespGetTableListReq
+{
+    sint64 lClubId      = 1; // 俱乐部ID
+}
+
+// 取桌子列表应答[S->C]
+message TPMsgRespGetTableList
+{
+    sint32 iResultID                              = 1;  // 返回结果: 0.成功，其他失败
+    map<string, TPMsgRspTableInfoArray> tableInfo = 2;  // 桌子信息，sRoomKey<==>桌子信息
+    string roomID                                 = 3;
+}
+
+message TPMsgRespWatchGame
+{
+    sint32 iResultID = 1;
+    sint64 lPlayerID = 2;
+    sint32 iTableID  = 3;
+    string sRoomKey  = 4;
+}
+
+// 结算
+message TPMsgRespGameCalStat 
+{
+    sint64 lUid           = 1;
+    sint64 lGameWin       = 2;
+    CreateRoomOption info = 3;
+    string sRoomKey       = 4;
+}
+
+// 玩家输赢数据
+message TPMsgWatchInfoReq
+{
+    string sRoomKey = 1;
+}
+
+message TPMsgWatchInfo
+{
+    sint64 lUid        = 1;  // 玩家UID
+    string sNickname   = 2;  // 昵称
+    sint32 iBuyInCount = 3;  // 手数
+    sint64 lBuyInNum   = 4;  // 买入
+    sint64 lCoinChange = 5;  // 盈亏
+    sint64 lTempChange = 6;  // 服务用
+}
+
+//
+message TPMsgWatchInfoResp
+{
+    sint32 iResultID               = 1;  // 返回结果: 0.成功，其他失败
+    repeated TPMsgWatchInfo info   = 2;
+}
+
+// 获取桌子上的余额
+message TPMsgGetCoinResp
+{
+    sint32 iResultID = 1; // 返回结果: 0 成功
+    sint64 lCoin     = 2; // 余额
+}
+
+// 取俱乐部正在进行的桌子数量请求[C->S]
+message TPMsgRespGetTableCountReq
+{
+    sint64 lClubId      = 1; // 俱乐部ID
+}
+
+// 取俱乐部正在进行的桌子数量请求[S->C]
+message TPMsgRespGetTableCountResp
+{
+    sint32 iResultID = 1;  // 返回结果: 0.成功，其他失败
+    sint64 lClubId   = 2;  // 俱乐部
+    sint32 iCount    = 3;  // 数量
+}

@@ -1,0 +1,231 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package XGameQs;
+
+enum Eum_Fs_Msgid
+{
+    E_MSGID_DEFAULT = 0;
+
+	// 金币场-快速开始模式消息ID	[QuickStart MsgID - 301...399]
+	E_QUICK_START_MSGID_JOIN_QUEUE_REQ       = 301;     //加入排队请求[C->S]
+    E_QUICK_START_MSGID_JOIN_QUEUE_RESP      = 302;     //加入排队响应[S->C,Data:]
+	E_QUICK_START_MSGID_JOIN_QUEUE_NOTIFY    = 303;     //加入排队通知[S->C,Data:]
+
+    E_QUICK_START_MSGID_QUIT_QUEUE_REQ       = 304;     //退出排队请求[C->S]
+    E_QUICK_START_MSGID_QUIT_QUEUE_RESP		 = 305;     //退出排队结果[S->C,Data:]
+	E_QUICK_START_MSGID_QUIT_QUEUE_NOTIFY 	 = 306;     //退出排队通知[S->C,Data:]
+
+	E_QUICK_START_MSGID_SITDOWN_REQ			 = 307;		//坐下桌子请求[C->S,Data:]
+	E_QUICK_START_MSGID_SITDOWN_RESP		 = 308;		//坐下桌子响应[S->C,Data:]
+	E_QUICK_START_MSGID_SITDOWN_NOTIFY		 = 309;		//坐下桌子通知[S->C,Data:]
+
+	E_QUICK_START_MSGID_EXIT_REQ			 = 310;		//桌子站起请求[C->S]
+	E_QUICK_START_MSGID_EXIT_RESP			 = 311;		//桌子站起响应[S->C,Data:]
+	E_QUICK_START_MSGID_EXIT_NOTIFY			 = 312;		//桌子站起通知[S->C,Data:] 
+
+    E_QUICK_START_MSGID_LOGIN_ROOM_REQ       = 313;     //登录房间消息请求[C->S]
+    E_QUICK_START_MSGID_LOGIN_ROOM_RESP      = 314;     //登录房间消息响应[S->C,Data:]
+    E_QUICK_START_MSGID_RECOME_NOTIFY        = 315;     //重入消息响应[S->C,Data:] 
+
+    E_QUICK_START_MSGID_CONTINUE_REQ         = 316;     //继续游戏请求[C->S] @用于结算时继续游戏
+    E_QUICK_START_MSGID_CONTINUE_RESP        = 317;     //继续游戏响应[S->C,Data:]    
+    E_QUICK_START_MSGID_CONTINUE_NOTIFY      = 318;     //继续游戏通知[S->C,Data:]
+
+    E_QUICK_START_MSGID_ENTER_ROOM_REQ       = 319;     //进入房间请求[C->S] @用于吸入
+    E_QUICK_START_MSGID_CHANGE_TABLE_REQ     = 320;     //换桌请求[C->S]
+    E_QUICK_START_MSGID_ENTER_SUCC_NOTIFY    = 321;     //进入房间成功通知[S->C] @用于客户端发坐桌消息，坐桌等待模式
+    E_QUICK_START_MSGID_CHANGE_TABLE_RESP    = 322;     //换桌通知[S->C]
+
+    E_QUICK_START_MSGID_GET_TABLE_LIST_REQ   = 330;     //取桌子列表请求[C->S]
+    E_QUICK_START_MSGID_GET_TABLE_LIST_RESP  = 331;     //取桌子列表应答[S->C]
+
+    E_QUICK_START_MSGID_FREE_SITDOWN_REQ	 = 341;		//自由坐下桌子请求[C->S,Data:]
+	E_QUICK_START_MSGID_FREE_SITDOWN_RESP	 = 342;		//自由坐下桌子响应[S->C,Data:]
+	E_QUICK_START_MSGID_FREE_SITDOWN_NOTIFY	 = 343;		//自由坐下桌子通知[S->C,Data:]
+
+    E_QUICK_START_MSGID_STAND_REQ	         = 351;		//站起请求[C->S,Data:]
+	E_QUICK_START_MSGID_STAND_RESP	         = 352;		//站起响应[S->C,Data:]
+	E_QUICK_START_MSGID_STAND_NOTIFY	     = 353;		//站起通知[S->C,Data:]
+}
+
+//切换牌桌应答
+message TQSMsgChangeTable
+{
+    sint32 iResultID = 1;  //返回结果: 0.成功, -1.其它原因
+    sint32 iTableID = 2;        //桌子ID
+}
+
+message TQSMsgReqJoinQueue
+{
+    sint32 iBlindLevel = 1; // 盲注等级
+    sint32 iMaxSeat = 2; //座位数
+}
+
+//加入排队机应答
+message TQSMsgRespJoinQueue
+{
+    sint32 iResultID = 1;  //返回结果: 0.成功, -1.其它原因
+}
+
+//退出排队机应答
+message TQSMsgRespQuitQueue
+{
+    sint32 iResultID = 1;  //返回结果: 0.成功, -1.其它原因
+}
+
+//玩家坐下请求 @暂时没有使用
+message TQSMsgReqSitDown
+{
+    bool bAutoSit = 1;      //是否自动坐桌 @如果bAutoSit为true，则iChatID为-1
+    sint32 iChairID = 2;	//桌子位置
+}
+
+//玩家财富
+message TUserWealth
+{
+    sint64 iRoomCard = 1;  //房卡
+    sint64 iDiamond = 2;   //钻石
+    sint64 lGoldCoin = 3;  //金币
+}
+
+//玩家坐下应答
+message TQSMsgRespSitDown
+{
+    sint32 iResultID = 1;    //返回结果: 0-成功; 301.指定chairid不可用, -1.其它错误
+    sint64 lPlayerID = 2;	 //玩家ID
+    sint32 iChairID = 3; 	 //所在桌子位置
+    string sNickName = 4;	 //玩家昵称
+    string sHeadStr = 5;     //头像路径
+    sint32 iPlayerGender = 6;  //玩家性别 0-未知 1-男 2-女
+    string sPlayerIP = 7;	   //玩家IP 
+    string sSignature = 8;        //玩家签名
+    sint32  iStatue   = 9;         ////玩家状态 0.进入 1.观战 2.重连
+    TUserWealth stUserWealth = 10; //玩家财富
+    bool bWatchGame = 11;  //是否观战
+    sint64 iTakenin = 12;   //带入
+    sint32 iMaxSeat = 13;
+    sint64 lSmallBlind = 14;
+    sint64 lBigBlind = 15;
+    sint64 lMinGold = 16;
+    sint64 lMaxGold = 17;
+    sint32 iLeagueLevel = 18;// 联赛等级
+}
+
+//自由坐下请求
+message TQSMsgReqFreeSitDown
+{
+    sint32 iTableID = 1;        //桌子ID
+    bool bAutoSit = 2;          //是否自动坐桌 @如果bAutoSit为true，则iChatID为-1
+    sint32 iChairID = 3;	    //桌子位置
+    sint64 ltakeCoin = 4;       //买入金额
+    bool bAutoSupplement = 5;   //自动补充
+    bool bMaxTakenIn = 6; //是否最大带入
+}
+
+//自由坐下应答
+message TQSMsgRespFreeSitDown
+{
+    sint32 iResultID = 1;    //返回结果: 0-成功; 301.指定chairid不可用, -1.其它错误
+    sint64 lPlayerID = 2;	 //玩家ID
+    sint32 iChairID = 3; 	 //所在桌子位置
+    string sNickName = 4;	 //玩家昵称
+    string sHeadStr = 5;     //头像路径
+    sint32 iPlayerGender = 6;  //玩家性别 0-未知 1-男 2-女
+    string sPlayerIP = 7;	   //玩家IP 
+    string sSignature = 8;        //玩家签名
+    sint32  iStatue   = 9;         ////玩家状态 0.进入 1.观战 2.重连
+    TUserWealth stUserWealth = 10; //玩家财富
+    bool bWatchGame = 11;  //是否观战
+    sint64 iTakenin = 12;   //带入
+    sint32 iMaxSeat = 13;
+    sint64 lSmallBlind = 14;
+    sint64 lBigBlind = 15;
+    sint64 lMinGold = 16;
+    sint64 lMaxGold = 17;
+    sint32 iLeagueLevel = 18;// 联赛等级
+}
+
+//站起应答
+message TQSMsgRspStand
+{
+    sint32 iResultID = 1;  //返回结果: 0.成功, 201.正在游戏中, -1.其它错误
+}
+
+//玩家起来应答
+message TQSMsgRespExit
+{
+    sint32 iResultID = 1;  //返回结果: 0.成功, 201.正在游戏中, -1.其它错误
+    sint64 lPlayerID = 2;  //玩家ID
+    sint32 iChairID  = 3;  //所在桌子位置
+}
+
+//登录房间消息响应
+message TQSMsgRespLoginRoom
+{
+    sint32 iResultID = 1; //返回结果: 0.成功，其他失败
+    sint32 iStatue = 2;   //玩家状态 0.进入 1.观战 2.重连
+}
+
+//玩家重新进入响应
+message TQSMsgRespRecome
+{
+    sint32 iResultID = 1; //返回结果: 0.成功，其他失败
+    sint64 lPlayerID = 2;   //玩家ID
+    sint32 iChairID = 3;	//桌子位置
+}
+
+//玩家继续游戏响应
+message TQSMsgRespContinue
+{
+    sint32 iResultID = 1;   //返回结果: 0.成功， 其他失败
+    sint64 lPlayerID = 2;   //玩家ID
+    sint32 iChairID = 3;    //所在桌子位置
+}
+
+//取桌子列表请求[C->S]
+message TQSMsgReqGetTableList
+{
+    sint32 iTableID = 1;   //0:拉取所有桌子信息  
+    //sint32 offset = 2;	 //开始位置 默认传 1
+    //sint32 count = 3;	 //条数 默认传 1
+    sint32 iMaxSeat = 2;
+    sint32 iBlindLevel = 3;
+}
+
+//玩家信息
+message TQSMsgRspTableInfo
+{
+    sint64 lPlayerID = 1;       //玩家ID
+    sint32 iPlayerGender = 2;	//玩家性别 0-未知，1-男， 2-女
+    string sNickName = 3;		//玩家昵称
+    string sHeadStr = 4;        //头像
+    sint64 lPoint = 5;          //分数
+}
+
+//玩家信息
+message TQSMsgRspTableInfoArray
+{
+    map<sint32, TQSMsgRspTableInfo> tableUserInfo = 1;  //单个桌子的玩家信息，位置号<==>玩家信息
+    sint32 iMaxSeat = 2;
+    sint64 lSmallBlind = 3;
+    sint64 lBigBlind = 4;
+    sint64 lMinGold = 5;
+    sint64 lMaxGold = 6;
+}
+
+//取桌子列表应答[S->C]
+message TQSMsgRespGetTableList
+{
+    sint32 iResultID = 1;   //返回结果: 0.成功，其他失败
+    map<sint32, TQSMsgRspTableInfoArray> tableInfo = 2;  //桌子信息，桌子号<==>桌子信息
+    string roomID =3;
+}
+
+//E_QUICK_START_MSGID_CHANGE_TABLE_REQ
+message TQSMsgReqChangeTable
+{
+    bool bAutoSupplement = 1;
+    sint32 iTableID = 2;
+}

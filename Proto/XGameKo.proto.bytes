@@ -1,0 +1,407 @@
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package XGameKo;
+
+enum Eum_Ko_Msgid
+{
+    E_MSGID_DEFAULT = 0;
+
+    // 淘汰赛场...
+    //E_KNOCKOUT_MSGID_JOIN_MATCH_REQ       = 401;     //加入比赛请求 [C->S,Data:]
+    //E_KNOCKOUT_MSGID_JOIN_MATCH_RESP      = 402;     //加入比赛响应 [S->C,Data:]
+    //E_KNOCKOUT_MSGID_JOIN_MATCH_NOTIFY    = 403;     //加入比赛通知 [S->C,Data:]
+    E_KNOCKOUT_MSGID_SIGN_UP_REQ            = 401;     //报名比赛请求 [C->S,Data:]
+    E_KNOCKOUT_MSGID_SIGN_UP_RESP           = 402;     //报名比赛响应 [S->C,Data:]
+    E_KNOCKOUT_MSGID_SIGN_UP_NOTIFY         = 403;     //报名比赛通知 [S->C,Data:]
+
+    //E_KNOCKOUT_MSGID_EXIT_MATCH_REQ       = 404;      //退赛请求 [C->S,Data:]
+    //E_KNOCKOUT_MSGID_EXIT_MATCH_RESP      = 405;      //退赛响应 [S->C,Data:]
+    //E_KNOCKOUT_MSGID_EXIT_MATCH_NOTIFY    = 406;      //退赛通知 [S->C,Data:]
+    E_KNOCKOUT_MSGID_QUIT_MATCH_REQ         = 404;      //取消报名请求 [C->S,Data:]
+    E_KNOCKOUT_MSGID_QUIT_MATCH_RESP        = 405;      //取消报名响应 [S->C,Data:]
+    E_KNOCKOUT_MSGID_QUIT_MATCH_NOTIFY      = 406;      //取消报名通知 [S->C,Data:]
+
+    //E_KNOCKOUT_MSGID_BEGIN_MATCH_REQ      = 407;      //开始比赛请求 [C->S,Data:]
+    //E_KNOCKOUT_MSGID_BEGIN_MATCH_RESP     = 408;      //开始比赛响应 [S->C,Data:]
+    E_KNOCKOUT_MSGID_BEGIN_MATCH_NOTIFY     = 409;      //开始比赛通知 [S->C,Data:]
+
+    E_KNOCKOUT_MSGID_SITDOWN_REQ            = 410;      //坐桌请求 [C->S,Data:]
+    E_KNOCKOUT_MSGID_SITDOWN_RESP           = 411;      //坐桌响应 [S->C,Data:]
+    E_KNOCKOUT_MSGID_SITDOWN_NOTIFY         = 412;      //坐桌通知 [S->C,Data:]
+
+    E_KNOCKOUT_MSGID_EXIT_REQ               = 413;      //桌子站起请求[C->S]
+    E_KNOCKOUT_MSGID_EXIT_RESP              = 414;      //桌子站起响应[S->C,Data:]
+    E_KNOCKOUT_MSGID_EXIT_NOTIFY            = 415;      //桌子站起通知[S->C,Data:]
+
+    E_KNOCKOUT_MSGID_RANK_NOTIFY            = 416;      //排名通知 [S->C,Data:]
+    E_KNOCKOUT_MSGID_RISE_NOTIFY            = 417;      //晋级通知 [S->C,Data:]
+    E_KNOCKOUT_MSGID_KNOCKOUT_NOTIFY        = 418;      //淘汰通知 [S->C,Data:]
+
+    E_KNOCKOUT_MSGID_LOGIN_ROOM_REQ         = 419;      //登录房间消息请求[C->S]
+    E_KNOCKOUT_MSGID_LOGIN_ROOM_RESP        = 420;      //登录房间消息响应[S->C,Data:]
+
+    E_KNOCKOUT_MSGID_RECOME_NOTIFY          = 421;      //重入消息响应[S->C,Data:]
+    E_KNOCKOUT_MSGID_ENTERROOM_REQ          = 422;      //进入房间请求[C->S,Data]
+    E_KNOCKOUT_MSGID_EXITROOM_REQ           = 423;      //离开房间请求[S->C,Data]
+    E_KNOCKOUT_MSGID_GAME_BEGIN_NOTIFY      = 424;      //每轮游戏开始通知[S->C,Data]
+    E_KNOCKOUT_MSGID_EXITROOM_RESP          = 425;      //退出房间响应[S->C, Data]
+
+    E_KNOCKOUT_MSGID_RECOME_DELAY_REQ       = 426;      //延迟报名进入房间
+
+    E_KNOCKOUT_MSGID_GET_TABLE_LIST_REQ     = 430;      //取桌子列表请求[C->S]
+    E_KNOCKOUT_MSGID_GET_TABLE_LIST_RESP    = 431;      //取桌子列表应答[S->C]
+    E_KNOCKOUT_MSGID_GET_TABLE_LIST_NOTIFY  = 432;      //取桌子列表应答[S->C]
+
+    E_KNOCKOUT_MSGID_WATCH_GAME_REQ         = 433;      //观战请求[C->S,Data:]
+    E_KNOCKOUT_MSGID_WATCH_GAME_RESP        = 434;      //观战响应[S->C,Data:]
+    E_KNOCKOUT_MSGID_WATCH_GAME_NOTIFY      = 435;      //观战通知[S->C,Data:]
+
+    E_KNOCKOUT_MSGID_BEGIN_NOTIFY           = 436;      //比赛开始通知 [S->C,Data:]
+    E_KNOCKOUT_MSGID_END_MATCH_NOTIFY       = 437;      //比赛结束通知 [S->C,Data:]
+    E_KNOCKOUT_MSGID_REPURCHASE_REQ         = 438;      //重购请求[C->S,Data:]
+    E_KNOCKOUT_MSGID_REPURCHASE_RESP        = 439;      //重购响应[S->C,Data:]
+    E_KNOCKOUT_MSGID_REPURCHASE_NOTIFY      = 440;      //重购通知[S->C,Data:]
+
+    E_KNOCKOUT_MSGID_ADDITIONAL_REQ         = 441;      //增购请求[C->S,Data:]
+    E_KNOCKOUT_MSGID_ADDITIONAL_RESP        = 442;      //增购响应[S->C,Data:]
+    E_KNOCKOUT_MSGID_ADDITIONAL_NOTIFY      = 443;      //增购通知[S->C,Data:]
+
+    E_KNOCKOUT_MSGID_ADDITIONAL_OR_REPURCHASE_REQ = 444;    //请求增购或者重购弹框信息
+    E_KNOCKOUT_MSGID_CANCEL_ADDITIONA_REQ = 445;    //取消增购
+
+    E_KNOCKOUT_MSGID_BLIND_INFO_REQ         = 446;      //盲注信息请求[C->S,Data:]
+    E_KNOCKOUT_MSGID_BLIND_INFO_RESP        = 447;      //盲注信息响应[S->C,Data:]
+    E_KNOCKOUT_MSGID_BLIND_INFO_NOTIFY      = 448;      //盲注通知[S->C,Data:]
+
+    E_KNOCKOUT_MSGID_REWARD_NOTIFY          = 449;      //比赛奖励通知
+
+    E_KNOCKOUT_MSGID_TEST_REQ               = 450;      //测试消息
+
+    E_KNOCKOUT_MSGID_ENTER_MATCH_RESP       = 451;     //进入房间
+
+    E_KNOCKOUT_MSGID_CHANGE_TABLE_NUM_NOTIFY = 452;    //桌子变更通知
+}
+
+//加入比赛
+message TKOMsgReqJoinMatch
+{
+    sint32 iMatchID = 1;  //比赛ID
+}
+
+//加入比赛响应
+message TKOMsgRespJoinMatch
+{
+    sint32 iResultID = 1;   //返回结果: 0-成功 1-未报名 2-比赛正在进行
+    sint32 iMatchID = 2;    //比赛ID
+}
+
+//用户报名费
+message UserEntryFee
+{
+    sint32 propsID = 1;     //道具ID
+    sint64 number = 2;      //道具数量
+    sint64 serviceFee = 3;  //服务费
+}
+
+message TKOMsgReqSignUp
+{
+    string matchID = 1;
+}
+
+//报名应答
+message TKOMsgRespSignUp
+{
+    sint32 iResultID = 1;  //返回结果 0-成功，其他-失败
+    UserEntryFee entryFee = 2;  //报名费
+    bool delay = 3; //是否延迟报名
+    string roomID = 4;   //房间号
+    string matchID = 5;
+    sint32 tableID = 6;
+}
+
+//玩家退赛请求
+message TKOMsgReqExitMatch
+{
+    sint32 iMatchID = 1;  //比赛ID
+}
+
+//玩家退赛响应
+message TKOMsgRespExitMatch
+{
+    sint32 iResultID = 1;  //返回结果 0-成功
+    sint32 iMatchID = 2;   //比赛ID
+}
+
+//取消报名应答
+message TKOMsgRespQuit
+{
+    sint32 iResultID = 1;  //返回结果 0-成功，其他-失败
+    UserEntryFee entryFee = 2;  //报名费
+    sint64 lPlayerID = 3; //退赛玩家id
+    string sNickName = 4;
+}
+
+//开始比赛响应
+message TKOMsgRespBeginMatch
+{
+    sint32 iMatchID = 1;  //比赛ID
+}
+
+//财富信息
+message TUserWealth
+{
+    sint64 iRoomCard = 1;   //房卡
+    sint64 iDiamond  = 2;   //钻石
+    sint64 lGoldCoin = 3;   //金币
+}
+
+//玩家坐下应答
+message TKOMsgRespSitDown
+{
+    sint32 iResultID = 1;           //返回结果: 0-成功; 1-桌子ID不可用; -1-其它原因
+    sint64 lPlayerID = 2;           //玩家ID
+    sint32 iChairID = 3;            //所在桌子位置
+    string sNickName = 4;           //玩家昵称
+    string sHeadStr = 5;            //头像路径
+    sint32 iPlayerGender = 6;       //玩家性别 0-未知 1-男 2-女
+    string sPlayerIP = 7;           //玩家IP 
+    string sSignature = 8;          //玩家签名
+    TUserWealth stUserWealth = 9;   //玩家财富
+    sint64 iTakenin = 10;           //带入
+}
+
+//玩家起来通知
+message TKOMsgNotifyExit
+{
+    sint32 iResultID = 1;  //返回结果: 0.成功, 201.正在游戏中, -1.其它错误
+    sint64 lPlayerID = 2;  //玩家ID
+    sint32 iChairID  = 3;  //所在桌子位置
+}
+
+//比赛用户信息
+message MatchUser
+{
+    sint64 lPlayerID = 1;   //用户ID
+    sint32 iRanking = 2;    //排名
+    sint32 iPoint = 3;      //积分
+}
+
+//排名通知
+message TKOMsgRespRank
+{
+    sint32 iMatchID = 1;         //比赛ID
+    sint32 iRanking = 2;         //当前名次
+    sint32 iPlayerNum = 3;       //当前比赛玩家数
+    repeated MatchUser vecMatchUser = 4; //比赛用户信息
+}
+
+//打完一局比赛状态通知
+message TKOMsgRespRise
+{
+    sint32 iRanking = 1;           //当前名次
+    sint32 iCurrentMatchRound = 2; //当前比赛玩家数
+    sint32 iTablePlaying = 3;      //该比赛正在进行的桌数
+    string sRiseRule = 4;          //比赛规则
+}
+
+//淘汰通知
+message TKOMsgRespKnockOut
+{   
+    sint32 iStatus = 1;         //1-最后一桌晋级, 2-淘汰 3 -主动退出
+    sint32 iMatchID = 2;        //比赛ID
+    sint32 iRanking = 3;        //排名
+    sint32 iKnockOutTime = 4;   //淘汰时间
+    bool   bGameEnd = 5;
+    sint64 lPlayerID = 6;       //被淘汰玩家
+    string sNickName = 7;
+}
+
+//道具
+message TKOMsgProps
+{
+    sint32 iPropsID = 1;  //道具ID
+    sint64 inumber = 2;   //数量
+}
+
+message TKOMsgSegment
+{
+    sint32 iGrade = 1; //当前段位
+    sint32 iClass = 2; //阶级（1-5）
+    sint32 iStar = 3;   //星数
+    sint32 iChange = 4; //变化值
+    sint32 iIntegral = 5; //当前积分
+    sint32 iseason = 6; //赛季
+    sint32 icfgId = 7 ; //
+}
+
+//比赛奖励通知
+message TKOMsgNotifyReward
+{
+    sint32 iMatchID = 1;                //比赛ID
+    sint32 iRanking = 2;                //排名
+    //map<sint32, sint64> props = 3;    //道具ID ：数量
+    repeated TKOMsgProps vecProps = 3;  //道具
+    sint64 total = 4;                   //总奖励
+    TKOMsgSegment segment = 5;          //段位结算
+}
+
+//测试结构体
+message TKOMsgReqTest
+{
+    sint32 iFunctionID = 1; //函数ID
+    sint32 iTableID = 2;    //桌子ID
+    sint32 iGameRound = 3;  //游戏轮数
+}
+
+//登录房间消息
+message TKOMsgRespLoginRoom
+{
+    sint32 iResultID = 1;     //返回结果: 0.成功
+}
+
+//玩家重新进入响应
+message TKOMsgRespRecome
+{
+    sint64 lPlayerID = 1;       //玩家ID
+    sint32 iChairID = 2;        //桌子位置
+}
+
+//游戏开始响应
+message TKOMsgRespGameBegin
+{
+    sint32 iCurrentMatchRound = 1;  //当前轮数
+    sint32 iMatchRound = 2;         //比赛总轮数
+    sint32 iRisePlayers = 3;        //晋级玩家数，即下轮开始玩家数
+    sint32 iCurrentGameRound = 4;   //当前游戏局数
+}
+
+//取桌子列表请求[C->S]
+message TKOMsgReqGetTableList
+{
+    sint32 iMatchID = 1;  //比赛ID
+    sint32 offset = 2;   //开始位置
+    sint32 count = 3;    //条数
+}
+
+//玩家信息
+message TKOMsgRspTableInfo
+{
+    sint64 lPlayerID = 1;       //玩家ID
+    sint32 iPlayerGender = 2;   //玩家性别 0-未知，1-男，2-女
+    string sNickName = 3;       //玩家昵称
+}
+
+//玩家信息
+message TKOMsgRspTableInfoArray
+{
+    map<sint32, TKOMsgRspTableInfo> tableUserInfo = 1;  //单个桌子的玩家信息， 位置号<==>玩家信息
+}
+
+//取桌子列表应答[S->C]
+message TKOMsgRespGetTableList
+{
+    sint32 iResultID = 1;   //返回结果: 0.成功，其他失败
+    map<sint32, TKOMsgRspTableInfoArray> tableInfo = 2;  //桌子信息，桌子号<==>桌子信息
+    string sRoomName = 3;   //房间名字
+    map<sint32, sint32> entryFee = 4; //报名费  propsID : mumber
+}
+
+//观战应答[S->C]
+message TKOMsgReqWatchGame
+{
+    sint32 iTableID = 1;   //观站
+    bool bSelfSelect = 2;   //是否指定桌子观战
+};
+
+//观战应答[S->C]
+message TKOMsgRespWatchGame
+{
+    sint32 iResultID = 1;   //返回结果: 0.成功，其他失败
+    sint32 iTableID = 2;   //观站
+    bool bWatchGame = 3;
+}
+
+//重购应答
+message TKOMsgRespRepurchase
+{
+    sint32 iResultID = 1;   //返回结果: 0.成功，其他失败
+    sint32 count = 2;       //剩余次数
+}
+
+//重购通知
+message TKOMsgNotifyRepurchase
+{
+    sint32 count = 1;  //剩余次数
+}
+
+//增购应答
+message TKOMsgRespAdditional
+{
+    sint32 iResultID = 1;   //返回结果: 0.成功，其他失败
+    sint32 count = 2;       //剩余次数
+    bool add =3;//是否是增购
+}
+
+//增购通知
+message TKOMsgNotifyAdditional
+{
+    sint32 count = 1;  //剩余次数
+    sint32 time = 2;   //增购时长
+    sint32 timestamp = 3;   //当前时间戳
+}
+
+//盲注应答
+message TKOMsgRespBlindInfo
+{
+    sint32 iResultID = 1;       //返回结果: 0.成功，其他失败
+    sint32 blindLevel = 2;      //当前盲注级别
+    sint32 remainingTime = 3;   //升盲剩余时间
+    sint32 maxBlindLevel = 4;   //最大盲注级别
+}
+
+//桌子变更通知
+message TKOMsgNotifyChangeTableNum
+{
+    sint32 lPlayerID = 1;       //玩家ID
+    sint32 iTable =2;           //当前桌子号
+    sint32 iTableTotalNum =3;   //当期桌子总数
+}
+
+//比赛结束通知
+message TKOMsgNotifyEndMatch
+{
+    sint32 iMatchID = 1;  //比赛ID
+}
+
+//比赛开始通知
+message TKOMsgNotifyBeginMatch
+{
+    sint32 iMatchID = 1;  //比赛ID
+}
+
+//E_KNOCKOUT_MSGID_ADDITIONAL_OR_REPURCHASE_REQ
+message TKOMsgReqAdditionalOrRepurchase
+{
+    sint32 type = 1;  //1:增购  2：重购
+}
+
+//退出房间 E_KNOCKOUT_MSGID_EXITROOM_RESP
+message TKOMsgRespExitRoom
+{
+    bool now = 1;//是否立即退出
+    sint32 iResultID = 2;
+}
+
+//通知升盲 E_KNOCKOUT_MSGID_BLIND_INFO_NOTIFY
+message TKOMsgNotifyBlindRaise
+{
+    sint32 blind_level =1;
+}
+
+//E_KNOCKOUT_MSGID_ENTERROOM_REQ
+message TKOMsgReqEnterRoom
+{
+    sint32 iTableID =1;
+}

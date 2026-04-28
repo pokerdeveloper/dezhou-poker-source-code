@@ -1,0 +1,171 @@
+
+syntax = "proto3";
+
+option cc_generic_services=false;
+
+package ScratchProto;
+
+message ScratchDetail
+{
+    message Item
+    {
+        int32 key_num = 1; 
+        int32 type = 2;//0： 数字  1： 倍数
+    }
+    int32 props_id = 1;
+    int32 scratch_num = 2;//刮刮卡数量
+    repeated Item reward_info = 3; //当前刮刮卡详情
+    int32 received = 4;// 是否领奖
+    int32 repeat_num = 5; //中奖条件（多少相同数字中奖）
+    int64 max_reward_num = 6; //最高中奖数
+    int64 play_ad_time = 7;// 上次观看时间  props_id = 85001
+    int64 ad_cd_time = 8;// cd  
+}
+
+//刮刮卡详情
+message QueryScratchDetailResp
+{
+    int32 ret = 1;
+    map<int32, ScratchDetail> detail_info = 2;
+}
+
+//领奖
+message ScratchRewardReq
+{
+    int32 props_id = 1;
+    int64 reward_num = 2; //领奖数，用于校验，可以不传
+}
+
+message ScratchRewardResp
+{
+    int32 ret = 1;
+    int32 props_id = 2;
+    int64 reward_num = 3;//领奖数
+    int32 scratch_num = 4;//刮刮卡数量
+}
+
+//获取刮刮卡
+message  ObtainScratchReq
+{
+    int32 props_id = 1;
+    int32 scratch_num = 2; //数量
+}
+
+message  ObtainScratchResp
+{
+    int32 ret = 1;
+    int32 props_id = 2;
+    int32 scratch_num = 3; //数量
+}
+
+//排行榜
+message QueryScratchBoardResp
+{
+    message Item
+    {
+        int64 uid = 1;
+        string head = 2;
+        int64 reward_num = 3; //获取奖励数
+    }
+    int32 ret = 1;
+    map<int32, Item> board_info = 2;// rank: info
+}
+
+/**************************成就***************************/
+message AchievementInfo
+{
+    int32 bet_id =1;
+    int32 achievement_num =2;// 成就次数
+    int32 condition = 3;// 触发成就条件
+    int64 reward_conf = 4;// 单次成就奖励
+    int64 reward_num = 5; //累积获取奖励
+    int32 status = 6; //使用装态
+}
+
+//获取成就信息
+message QueryAchievementInfoReq
+{
+    int64 uid = 1;
+}
+
+message QueryAchievementInfoResp
+{
+    int32 ret = 1;
+    repeated AchievementInfo info = 2;
+}
+
+//触发成就通知
+message AchievementInfoNotify
+{
+    repeated AchievementInfo info = 1;
+}
+
+//成就状态
+message AchievementStatusReq
+{
+    map<int32, bool> status = 1; // betid:used
+}
+
+message AchievementStatusResp
+{
+    int32 ret =1;
+    map<int32, bool> status = 2; // betid:used
+}
+
+//排行榜
+message QueryAchievementBoardReq
+{
+    int32 bet_id =1;
+}
+message QueryAchievementBoardResp
+{
+    message Item
+    {
+        int64 uid = 1;
+        string sNickName     = 2;  //玩家昵称
+        string sHeadStr      = 3;  //头像路径
+        sint32 iPlayerGender = 4;  //玩家性别 0-未知 1-男 2-女
+        int64 achievement_num = 5; //成就数
+        int64 reward_num = 6; //奖励数
+        int64 win_num = 7; //win
+    }
+    int32 ret = 1;
+    repeated Item info = 2;
+}
+
+/**************************联赛排行*************************/
+message QueryLeagueBoardResp
+{
+    message Item
+    {
+        int64 uid = 1;
+        int32 iRank = 2; //排名
+        string sNickName     = 3;  //玩家昵称
+        string sHeadStr      = 4;  //头像路径
+        sint32 iPlayerGender = 5;  //玩家性别 0-未知 1-男 2-女
+        int64 league_reward_num = 6; //奖励数
+        int64 league_win_num = 7; //本赛季赢取的筹码
+    }
+    int32 ret = 1;
+    int32 league_level = 2; //等级
+    repeated Item league_board_info = 3;
+    int64 league_remian_time = 4;//赛季剩余时间
+    map<int32, int32> m_group_count = 5; //key 1:升级  2：保级  3：降级 人数分布
+    int64 total_league_reward = 6;// 联赛奖池
+}
+
+//
+message LeagueRewardInfoResp
+{
+    int32 ret = 1;
+    int32 league_level = 2;
+    int32 league_rank = 3;
+    int64 league_reward_num = 4; //奖励数
+    int32 league_status = 5;//状态， 1:升级  2：保级  3：降级 人数分布
+}
+
+message GetLeagueRewardResp
+{
+    int32 ret = 1;
+    int64 league_reward_num = 2; //奖励数
+}
